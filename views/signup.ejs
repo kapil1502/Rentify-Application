@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rentify</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        /* Include your CSS styles here */
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="text"], input[type="email"], input[type="contact"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.875em;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script type="text/javascript" src="/views.js"></script>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>SignUp with Rentify</h2>
+
+        <% if (message) { %>
+            <p><%= message %></p>
+        <% } %>
+
+        <form id="signupForm" action="/user/create" method="post" onsubmit="return validateForm()">
+
+            <div class="form-group">
+                <label for="f_name">Enter your First Name:</label>
+                <input type="text" id="f_name" name="f_name" placeholder="Demo..." required>
+                <div id="f_nameError" class="error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="l_name">Enter your Last Name:</label>
+                <input type="text" id="l_name" name="l_name" placeholder="User..." required>
+                <div id="l_nameError" class="error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Enter your Email:</label>
+                <input type="email" id="email" name="email" placeholder="demo@user.com" required>
+                <div id="emailError" class="error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="contact">Enter your contact number:</label>
+                <input type="contact" id="contact" name="contact" placeholder="1234567890" required>
+                <div id="contactError" class="error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Enter your password:</label>
+                <input type="password" id="password" name="password" placeholder="password" required autocomplete="off">
+                <div id="passwordError" class="error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm the password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="confirm password" required autocomplete="off">
+                <div id="confirmPasswordError" class="error"></div>
+            </div>
+
+            <label for="is_seller">Register as a Seller:</label>
+            <input type="checkbox" id="is_seller" name="is_seller">
+
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+
+   </body>
+</html>

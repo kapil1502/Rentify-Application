@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome To Rentify</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+            margin: 20px 0;
+        }
+
+        .post {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .post h2 {
+            color: #555;
+        }
+
+        .post p {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .post img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        .post button, .post a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #007BFF;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .post button:hover, .post a:hover {
+            background-color: #0056b3;
+        }
+
+        .post .like-btn {
+            background-color: #ffc107;
+            margin-left: 10px;
+        }
+
+        .post .like-btn:hover {
+            background-color: #e0a800;
+        }
+
+        .add-new-post {
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #28a745;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .add-new-post:hover {
+            background-color: #218838;
+        }
+
+        .sort-widget {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .sort-label {
+            margin-right: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .sort-select {
+            padding: 5px 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #333;
+        }
+
+        .sort-select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="/views.js"></script>
+</head>
+<body>
+    <h1>Properties Available Right Now for Sale:</h1>
+
+    <% if (posts.length > 0) { %>
+        <script type="text/javascript">
+            const posts = <%- JSON.stringify(posts) %>;
+        </script>
+        <div class="sort-widget">
+            <label for="sort-options" class="sort-label">Sort by:</label>
+            <select id="sort-options" class="sort-select" onchange="sortPosts(posts)">
+                <option value="likes">Most Likes</option>
+                <option value="area">Area</option>
+                <option value="bedrooms">Number of Bedrooms</option>
+                <option value="bathrooms">Number of Bathrooms</option>
+                <option value="hospitals">Number of Hospitals</option>
+                <option value="colleges">Number of Colleges</option>
+            </select>
+        </div>
+        <div id="posts-container-new">
+            <% posts.forEach(post => { %>
+                <div class="post">
+                    <h2>Property ID: <%= post.property_id %></h2>
+                    <p><strong>Place:</strong> <%= post.place %></p>
+                    <p><strong>Area:</strong> <%= post.area %> sq ft</p>
+                    <p><strong>Bedrooms:</strong> <%= post.number_bedroom %></p>
+                    <p><strong>Bathrooms:</strong> <%= post.number_bathroom %></p>
+                    <p><strong>Hospitals Nearby:</strong> <%= post.number_hospital %></p>
+                    <p><strong>Colleges Nearby:</strong> <%= post.number_college %></p>
+                    <% if (post.image) { %>
+                        <img src="data:image/jpeg;base64,<%= post.image.toString('base64') %>" alt="Property Image" />
+                    <% } else { %>
+                        <p>No image available</p>
+                    <% } %>
+                    <br>
+                    <button onclick="fetchSellerDetailsWithNotify('<%= post.property_id %>')" class="add-new-post" data-bs-toggle="modal" data-bs-target="#staticBackdrop">I am interested</button>
+                    <button onclick="likePost('<%= post.property_id %>')" class="like-btn">👍 Like</button>
+                    <p id="like-count-<%= post.property_id %>">Likes: <%= post.likes_count %></p>
+                </div>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <p>No posts found.</p>
+    <% } %>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Seller Details</h1>
+                </div>
+                <div class="modal-body" id="modal-body-content">
+                    <!-- Seller details will be inserted here -->
+                    <p>Seller Details are being fetching. Please wait...</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

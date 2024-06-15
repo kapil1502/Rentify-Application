@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome To Rentify</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+            margin: 20px 0;
+        }
+
+        .post {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .post h2 {
+            color: #555;
+        }
+
+        .post p {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .post img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        .post a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #007BFF;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .post a:hover {
+            background-color: #0056b3;
+        }
+
+        .add-new-post {
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #28a745;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .add-new-post:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1>Available Properties Listings</h1>
+    <% if (posts && posts.length > 0) { %>
+        <% posts.forEach(post => { %>
+            <div class="post">
+                <h2>Property ID: <%= post.property_id %></h2>
+                <p><strong>Place:</strong> <%= post.place %></p>
+                <p><strong>Area:</strong> <%= post.area %> sq ft</p>
+                <p><strong>Bedrooms:</strong> <%= post.number_bedroom %></p>
+                <p><strong>Bathrooms:</strong> <%= post.number_bathroom %></p>
+                <p><strong>Hospitals Nearby:</strong> <%= post.number_hospital %></p>
+                <p><strong>Colleges Nearby:</strong> <%= post.number_college %></p>
+                <% if (post.image) { %>
+                    <img src="data:image/jpeg;base64,<%= post.image.toString('base64') %>" alt="Property Image" />
+                <% } else { %>
+                    <p>No image available</p>
+                <% } %>
+                <br>
+                <a href="/seller/posts/edit/<%= post.property_id %>">Edit</a>
+                <a href="/seller/posts/delete/<%=  post.property_id  %>">Remove Posting</a>
+            </div>
+        <% }); %>
+    <% } else { %>
+        <p>No posts found.</p>
+    <% } %>
+    <a href="/seller/posts/add" class="add-new-post">Add New Posting</a>
+</body>
+</html>

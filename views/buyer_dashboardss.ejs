@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome To Rentify</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+            margin: 20px 0;
+        }
+
+        .post {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .post h2 {
+            color: #555;
+        }
+
+        .post p {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .post img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        .post button, .post a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #007BFF;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .post button:hover, .post a:hover {
+            background-color: #0056b3;
+        }
+
+        .post .like-btn {
+            background-color: #ffc107;
+            margin-left: 10px;
+        }
+
+        .post .like-btn:hover {
+            background-color: #e0a800;
+        }
+
+        .add-new-post {
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #28a745;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .add-new-post:hover {
+            background-color: #218838;
+        }
+
+        .sort-widget {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .sort-label {
+            margin-right: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .sort-select {
+            padding: 5px 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #333;
+        }
+
+        .sort-select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        #posts-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+        }
+    </style>
+    <script>
+        async function showSellerDetails(propertyId) {
+            try {
+                const response = await fetch(`/buyer/seller-details/${propertyId}`);
+                const data = await response.json();
+                if (data.success) {
+                    alert(`Seller Details:\nName: ${data.seller.f_name} ${data.seller.l_name}\nEmail: ${data.seller.email}\nContact: ${data.seller.contact}`);
+                } else {
+                    alert('Failed to fetch seller details');
+                }
+            } catch (error) {
+                console.error('Error fetching seller details:', error);
+                alert('Error fetching seller details');
+            }
+        }
+
+        async function likePost(propertyId) {
+            try {
+                const response = await fetch(`/buyer/like-post/${propertyId}`, { method: 'POST' });
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById(`like-count-${propertyId}`).textContent = `Likes: ${data.likes[0].likes_count}`;
+                } else {
+                    alert('Failed to like the post');
+                }
+            } catch (error) {
+                console.error('Error liking post:', error);
+                alert('Error liking post');
+            }
+        }
+
+        function displayPosts(sortedPosts) {
+            const postsContainer = document.getElementById('posts-container');
+            postsContainer.innerHTML = ''; // Clear current posts
+            sortedPosts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'post';
+                postElement.innerHTML = `
+                    <h2>Property ID: ${post.property_id}</h2>
+                    <p><strong>Place:</strong> ${post.place}</p>
+                    <p><strong>Area:</strong> ${post.area} sq ft</p>
+                    <p><strong>Bedrooms:</strong> ${post.number_bedroom}</p>
+                    <p><strong>Bathrooms:</strong> ${post.number_bathroom}</p>
+                    <p><strong>Hospitals Nearby:</strong> ${post.number_hospital}</p>
+                    <p><strong>Colleges Nearby:</strong> ${post.number_college}</p>
+                    ${post.image ? `<img src="data:image/jpeg;base64,${post.image.toString('base64')}" alt="Property Image" />` : `<p>No image available</p>`}
+                    <button onclick="showSellerDetails('${post.property_id}')" class="add-new-post">I am interested</button>
+                    <button onclick="likePost('${post.property_id}')" class="like-btn">👍 Like</button>
+                    <p id="like-count-${post.property_id}">Likes: ${post.likes_count}</p>
+                `;
+                postsContainer.appendChild(postElement);
+            });
+        }
+
+        function sortPosts() {
+            const sortBy = document.getElementById('sort-options').value;
+            let sortedPosts;
+
+            switch (sortBy) {
+                case 'likes':
+                    sortedPosts = posts.sort((a, b) => b.likes_count - a.likes_count);
+                    break;
+                case 'area':
+                    sortedPosts = posts.sort((a, b) => b.area - a.area);
+                    break;
+                case 'bedrooms':
+                    sortedPosts = posts.sort((a, b) => b.number_bedroom - a.number_bedroom);
+                    break;
+                case 'bathrooms':
+                    sortedPosts = posts.sort((a, b) => b.number_bathroom - a.number_bathroom);
+                    break;
+                case 'hospitals':
+                    sortedPosts = posts.sort((a, b) => b.number_hospital - a.number_hospital);
+                    break;
+                case 'colleges':
+                    sortedPosts = posts.sort((a, b) => b.number_college - a.number_college);
+                    break;
+                default:
+                    sortedPosts = posts;
+            }
+
+            displayPosts(sortedPosts);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            sortPosts(); // Initial display
+        });
+    </script>
+</head>
+<body>
+    <h1>Properties Available Right Now for Sale:</h1>
+    <div class="sort-widget">
+        <label for="sort-options" class="sort-label">Sort by:</label>
+        <select id="sort-options" class="sort-select" onchange="sortPosts()">
+            <option value="likes">Most Likes</option>
+            <option value="area">Area</option>
+            <option value="bedrooms">Number of Bedrooms</option>
+            <option value="bathrooms">Number of Bathrooms</option>
+            <option value="hospitals">Number of Hospitals</option>
+            <option value="colleges">Number of Colleges</option>
+        </select>
+    </div>
+    <div id="posts-container">
+        <!-- Posts will be dynamically inserted here -->
+    </div>
+</body>
+</html>

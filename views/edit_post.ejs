@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Post</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+            margin: 20px 0;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"] {
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group img {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Edit Post</h1>
+    <form action="/seller/posts/edit/<%= post.property_id %>" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="seller_id" value="<%= post.seller_id %>">
+        
+        <div class="form-group">
+            <label for="place">Place:</label>
+            <input type="text" id="place" name="place" value="<%= post.place %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="area">Area (sq ft):</label>
+            <input type="number" id="area" name="area" value="<%= post.area %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="number_bedroom">Number of Bedrooms:</label>
+            <input type="number" id="number_bedroom" name="number_bedroom" value="<%= post.number_bedroom %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="number_bathroom">Number of Bathrooms:</label>
+            <input type="number" id="number_bathroom" name="number_bathroom" value="<%= post.number_bathroom %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="number_hospital">Number of Hospitals Nearby:</label>
+            <input type="number" id="number_hospital" name="number_hospital" value="<%= post.number_hospital %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="number_college">Number of Colleges Nearby:</label>
+            <input type="number" id="number_college" name="number_college" value="<%= post.number_college %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image">
+            <% if (post.image) { %>
+                <img src="data:image/jpeg;base64,<%= post.image.toString('base64') %>" alt="Property Image">
+            <% } %>
+        </div>
+
+        <input type="submit" value="Update Post">
+    </form>
+</body>
+</html>

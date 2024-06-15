@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Post</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+            margin: 20px 0;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"] {
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add New Post</h1>
+    <form action="/seller/posts/add" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="place">Place:</label>
+            <input type="text" id="place" name="place" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="area">Area (sq ft):</label>
+            <input type="number" id="area" name="area" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="number_bedroom">Number of Bedrooms:</label>
+            <input type="number" id="number_bedroom" name="number_bedroom" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="number_bathroom">Number of Bathrooms:</label>
+            <input type="number" id="number_bathroom" name="number_bathroom" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="number_hospital">Number of Hospitals Nearby:</label>
+            <input type="number" id="number_hospital" name="number_hospital" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="number_college">Number of Colleges Nearby:</label>
+            <input type="number" id="number_college" name="number_college" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="image">Upload Image:</label>
+            <input type="file" id="image" name="image">
+        </div>
+        
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+.form-container {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+
+  .submit-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #472dbb;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .submit-btn:hover {
+    background-color: #4565a0;
+  }
+
+  p {
+    margin-top: 15px;
+  }
+
+  .post {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  .post img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .sort-widget {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.sort-label {
+    margin-right: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+}
+
+.sort-select {
+    padding: 5px 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+}
+
+.sort-select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.post button, .post a {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: #007BFF;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.post button:hover, .post a:hover {
+  background-color: #0056b3;
+}
+
+.post .like-btn {
+  background-color: #ffc107;
+  margin-left: 10px;
+}
+
+.post .like-btn:hover {
+  background-color: #e0a800;
+}
+
+.add-new-post {
+  margin-top: 20px;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: #28a745;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.add-new-post:hover {
+  background-color: #218838;
+}
+
+.post h2 {
+  color: #555;
+}
